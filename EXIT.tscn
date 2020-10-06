@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://assets/sprites/roosta-spritesheet.png" type="Texture" id=1]
+
+[node name="EXIT" type="Node2D"]
+
+[node name="roosta-spritesheet" type="Sprite" parent="."]
+position = Vector2( 16, 16 )
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 576, 0, 32, 32 )

@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://assets/sprites/roosta-spritesheet.png" type="Texture" id=1]
+[ext_resource path="res://SuperTrap.gd" type="Script" id=2]
+
+[node name="SuperTrap" type="Node2D"]
+script = ExtResource( 2 )
+
+[node name="roosta-spritesheet" type="Sprite" parent="."]
+position = Vector2( 16.8436, 16.1336 )
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 384, 0, 32, 32 )

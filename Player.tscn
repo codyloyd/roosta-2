@@ -1,0 +1,109 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://assets/sprites/roosta-spritesheet.png" type="Texture" id=1]
+[ext_resource path="res://Player.gd" type="Script" id=2]
+[ext_resource path="res://assets/sounds/oof.wav" type="AudioStream" id=3]
+[ext_resource path="res://Spells.gd" type="Script" id=4]
+
+[sub_resource type="Animation" id=1]
+resource_name = "bump"
+length = 0.15
+step = 0.05
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:position")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.05, 0.1, 0.15, 1 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 17, 15 ), Vector2( 14, 16 ), Vector2( 18, 15 ), Vector2( 16, 16 ), Vector2( 12, 14 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Sprite:rotation_degrees")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0.05, 0.1, 0.15 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ 0.0, -8.7, 0.0 ]
+}
+
+[sub_resource type="Animation" id=2]
+resource_name = "hit"
+length = 0.5
+step = 0.05
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:rotation_degrees")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.05, 0.2 ),
+"transitions": PoolRealArray( 1, 0.870549, 0.143587 ),
+"update": 0,
+"values": [ 0.0, -20.0, 0.0 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Sprite:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.05, 0.1, 0.15, 0.2, 0.25, 0.3 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 0.580392, 0.0196078, 0.0196078, 1 ), Color( 1, 1, 1, 1 ), Color( 0.968627, 0.223529, 0.223529, 1 ), Color( 1, 1, 1, 1 ), Color( 1, 0.501961, 0.666667, 1 ), Color( 1, 1, 1, 1 ) ]
+}
+
+[node name="Player" type="Node2D"]
+script = ExtResource( 2 )
+type = 0
+
+[node name="ColorRect" type="ColorRect" parent="."]
+visible = false
+margin_right = 32.0
+margin_bottom = 32.0
+color = Color( 0.0862745, 0.356863, 0.776471, 0.415686 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Sprite" type="Sprite" parent="."]
+position = Vector2( 17, 15 )
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 0, 0, 32, 32 )
+
+[node name="Tween" type="Tween" parent="."]
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/bump = SubResource( 1 )
+anims/hit = SubResource( 2 )
+
+[node name="ShakeTimer" type="Timer" parent="."]
+process_mode = 0
+wait_time = 0.2
+one_shot = true
+
+[node name="hit_sound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 3 )
+
+[node name="TurnTimer" type="Timer" parent="."]
+wait_time = 0.1
+one_shot = true
+
+[node name="SwipeTimeout" type="Timer" parent="."]
+one_shot = true
+
+[node name="Spells" type="Node2D" parent="."]
+script = ExtResource( 4 )
+[connection signal="tween_all_completed" from="Tween" to="." method="_on_Tween_tween_all_completed"]
+[connection signal="timeout" from="TurnTimer" to="." method="_on_TurnTimer_timeout"]

@@ -1,0 +1,193 @@
+[gd_scene load_steps=13 format=2]
+
+[ext_resource path="res://Enemy.gd" type="Script" id=1]
+[ext_resource path="res://assets/sprites/roosta-spritesheet.png" type="Texture" id=2]
+[ext_resource path="res://assets/sounds/pop1.wav" type="AudioStream" id=3]
+[ext_resource path="res://assets/sounds/pop3.wav" type="AudioStream" id=4]
+[ext_resource path="res://assets/sounds/pop2.wav" type="AudioStream" id=5]
+[ext_resource path="res://pop.gd" type="Script" id=6]
+[ext_resource path="res://assets/sounds/quack.wav" type="AudioStream" id=7]
+[ext_resource path="res://assets/sprites/bubble.png" type="Texture" id=8]
+
+[sub_resource type="Curve" id=1]
+_data = [ Vector2( 0.0245902, 1 ), 0.0, -2.39406, 0, 0, Vector2( 0.877049, 0.266842 ), 0.0, 0.0, 0, 0 ]
+
+[sub_resource type="Animation" id=2]
+resource_name = "die"
+length = 0.5
+step = 0.01
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.05 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 1, 1 ), Vector2( 0, 0 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Sprite:rotation_degrees")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.05 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 0.0, -167.0 ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("bubble:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0.01 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ true ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("bubble:region_rect")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 0.08, 0.13, 0.18, 0.23, 0.27 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ Rect2( 0, 0, 48, 48 ), Rect2( 48, 0, 48, 48 ), Rect2( 240, 0, 48, 48 ), Rect2( 336, 0, 48, 48 ), Rect2( 384, 0, 48, 48 ), Rect2( 482, 0, 48, 48 ) ]
+}
+
+[sub_resource type="Animation" id=3]
+resource_name = "hurt"
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:region_rect")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Rect2( 320, 0, 32, 32 ) ]
+}
+
+[sub_resource type="Animation" id=4]
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 1, 1 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Sprite:rotation_degrees")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 0.0 ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Sprite:region_rect")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Rect2( 96, 0, 32, 32 ) ]
+}
+
+[node name="Enemy" type="Node2D"]
+script = ExtResource( 1 )
+
+[node name="ColorRect" type="ColorRect" parent="."]
+visible = false
+margin_right = 32.0
+margin_bottom = 32.0
+color = Color( 0.392157, 0.0980392, 0.0980392, 0.356863 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Sprite" type="Sprite" parent="."]
+position = Vector2( 16, 16 )
+rotation = -2.9147
+scale = Vector2( 1e-05, 1e-05 )
+texture = ExtResource( 2 )
+region_enabled = true
+region_rect = Rect2( 320, 0, 32, 32 )
+
+[node name="Particles" type="CPUParticles2D" parent="."]
+position = Vector2( 18, 16 )
+emitting = false
+amount = 100
+lifetime = 0.6
+one_shot = true
+explosiveness = 1.0
+lifetime_randomness = 1.0
+emission_shape = 1
+emission_sphere_radius = 2.0
+direction = Vector2( 0, 0 )
+spread = 180.0
+gravity = Vector2( 0, 0 )
+initial_velocity = 481.15
+initial_velocity_random = 1.0
+scale_amount = 5.0
+scale_amount_random = 0.92
+scale_amount_curve = SubResource( 1 )
+
+[node name="bubble" type="Sprite" parent="."]
+position = Vector2( 18, 16 )
+texture = ExtResource( 8 )
+region_enabled = true
+region_rect = Rect2( 482, 0, 48, 48 )
+
+[node name="DeathTimer" type="Timer" parent="."]
+wait_time = 0.5
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/die = SubResource( 2 )
+anims/hurt = SubResource( 3 )
+anims/setup = SubResource( 4 )
+
+[node name="ShakeTimer" type="Timer" parent="."]
+wait_time = 0.2
+one_shot = true
+
+[node name="hit_sound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 7 )
+
+[node name="pop" type="Node" parent="."]
+script = ExtResource( 6 )
+
+[node name="pop" type="AudioStreamPlayer2D" parent="pop"]
+stream = ExtResource( 3 )
+
+[node name="pop2" type="AudioStreamPlayer2D" parent="pop"]
+stream = ExtResource( 5 )
+
+[node name="pop3" type="AudioStreamPlayer2D" parent="pop"]
+stream = ExtResource( 4 )
+
+[node name="Tween" type="Tween" parent="."]
